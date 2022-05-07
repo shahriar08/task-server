@@ -25,7 +25,33 @@ app.get("/allData", (req,res) =>{
 app.post("/addData",(req,res) =>{
     const {name,age,gender,birthDate} = req.body;
     const sqlInsert = "INSERT INTO info_db (name,age,gender,birthDate) VALUES (?,?,?)";
-    db.query(sqlInsert,[name,age,gender,birthDate])
+    db.query(sqlInsert,[name,age,gender,birthDate],(error,result)=>{
+        if(error){
+            console.log(error);
+        }
+    });
+});
+
+
+app.delete("delete/:id",(req,res) => {
+    const {id} = req.params;
+    const sqlGet = "SELECT FROM info_db WHERE id = ?";
+    db.query(sqlRemove,id,(error,result) =>{
+        if(error){
+            console.log(error);
+        }
+    });
+});
+
+app.put("/update/:id",(req,res) =>{
+    const {id} = req.params;
+    const {name,age,gender,birthDate} = req.body;
+    const sqlUpdate = "UPDATE info_db SET name=?, age=?,gender=?,birthDate=? WHERE id=?";
+    db.query(sqlGet,[name,age,gender,birthDate],(error,result)=>{
+        if(error){
+            console.log(error);
+        }
+    });
 })
 
 app.get('/',(req,res) =>{ 
